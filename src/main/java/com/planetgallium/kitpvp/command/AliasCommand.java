@@ -9,52 +9,52 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class AliasCommand implements Listener {
 
-	private Resource config;
+    private Resource config;
 
-	public AliasCommand(Game plugin) {
-		this.config = plugin.getResources().getConfig();
-	}
+    public AliasCommand(Game plugin) {
+        this.config = plugin.getResources().getConfig();
+    }
 
-	@EventHandler
-	public void onCommand(PlayerCommandPreprocessEvent e) {
-		
-		Player p = e.getPlayer();
-		String message = e.getMessage();
+    @EventHandler
+    public void onCommand(PlayerCommandPreprocessEvent e) {
 
-		String[] words = message.split(" ");
+        Player p = e.getPlayer();
+        String message = e.getMessage();
 
-		if (message.equals("/spawn") && config.getBoolean("Commands.Alias.Spawn")) {
+        String[] words = message.split(" ");
 
-			e.setCancelled(true);
-			p.performCommand("kp spawn");
+        if (message.equals("/spawn") && config.getBoolean("Commands.Alias.Spawn")) {
 
-		} else if (message.equals("/kits") && config.getBoolean("Commands.Alias.Kits")) {
+            e.setCancelled(true);
+            p.performCommand("kp spawn");
 
-			e.setCancelled(true);
-			p.performCommand("kp kits");
+        } else if (message.equals("/kits") && config.getBoolean("Commands.Alias.Kits")) {
 
-		} else if (message.startsWith("/kit") && config.getBoolean("Commands.Alias.Kit")) {
+            e.setCancelled(true);
+            p.performCommand("kp kits");
 
-			if (words.length == 1) {
-				e.setCancelled(true);
-				p.performCommand("kp kit");
-			} else if (words.length == 2) {
-				e.setCancelled(true);
-				p.performCommand("kp kit " + words[1]);
-			}
+        } else if (message.startsWith("/kit") && config.getBoolean("Commands.Alias.Kit")) {
 
-		} else if (message.startsWith("/stats") && config.getBoolean("Commands.Alias.Stats")) {
+            if (words.length == 1) {
+                e.setCancelled(true);
+                p.performCommand("kp kit");
+            } else if (words.length == 2) {
+                e.setCancelled(true);
+                p.performCommand("kp kit " + words[1]);
+            }
 
-			if (words.length == 1) {
-				e.setCancelled(true);
-				p.performCommand("kp stats");
-			} else if (words.length == 2) {
-				e.setCancelled(true);
-				p.performCommand("kp stats " + words[1]);
-			}
+        } else if (message.startsWith("/stats") && config.getBoolean("Commands.Alias.Stats")) {
 
-		}
-		
-	}
-	
+            if (words.length == 1) {
+                e.setCancelled(true);
+                p.performCommand("kp stats");
+            } else if (words.length == 2) {
+                e.setCancelled(true);
+                p.performCommand("kp stats " + words[1]);
+            }
+
+        }
+
+    }
+
 }

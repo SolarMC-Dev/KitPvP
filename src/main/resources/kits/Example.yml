@@ -8,18 +8,18 @@ Inventory:
     Helmet:
       Name: '&aSkull Item'
       Lore:
-      - '&7This is a player skull'
-      - '&7which can automatically'
-      - '&7be detected and saved'
-      - '&7when using /kp create'
+        - '&7This is a player skull'
+        - '&7which can automatically'
+        - '&7be detected and saved'
+        - '&7when using /kp create'
       Material: SKULL_ITEM
       Skull: cervinakuy
     Chestplate:
       Name: '&aDyed Item'
       Lore:
-      - '&7This is a dyed item which'
-      - '&7can include over 16 million'
-      - '&7different color combinations'
+        - '&7This is a dyed item which'
+        - '&7can include over 16 million'
+        - '&7different color combinations'
       Material: LEATHER_CHESTPLATE
       Dye:
         Red: 127
@@ -28,37 +28,37 @@ Inventory:
     Leggings:
       Name: '&aEnchanted Item'
       Lore:
-      - '&7This is an enchanted'
-      - '&7item which can support'
-      - '&7an unlimited amount of'
-      - '&7enchantments and can bypass'
-      - '&7vanilla enchantment limits.'
+        - '&7This is an enchanted'
+        - '&7item which can support'
+        - '&7an unlimited amount of'
+        - '&7enchantments and can bypass'
+        - '&7vanilla enchantment limits.'
       Material: IRON_LEGGINGS
       Enchantments:
         DEPTH_STRIDER: 10
     Boots:
       Name: '&aItem'
       Lore:
-      - '&7This is just a regular item.'
+        - '&7This is just a regular item.'
       Material: GOLD_BOOTS
   Items:
     0:
       Name: '&aCustomized Item'
       Lore:
-      - '&3This is an item with a custom'
-      - '&cname and lore.'
+        - '&3This is an item with a custom'
+        - '&cname and lore.'
       Material: PAPER
     1:
       Name: '&aDamaged Item'
       Lore:
-      - '&7This is a damaged item'
+        - '&7This is a damaged item'
       Durability: 10
       Material: GOLD_PICKAXE
     2:
       Name: '&aPotion Item'
       Lore:
-      - '&7This is a regular potion item'
-      - '&7Splash potions are also supported'
+        - '&7This is a regular potion item'
+        - '&7Splash potions are also supported'
       Material: POTION
       Type: POTION
       Effects:
@@ -68,12 +68,12 @@ Inventory:
     7:
       Name: '&aAbility Item'
       Lore:
-      - '&7This is an ability item'
-      - '&7which can support messages,'
-      - '&7sounds, potion effects,'
-      - '&7and commands when right-clicked.'
-      - '&7It must be customized in'
-      - '&7the kit file.'
+        - '&7This is an ability item'
+        - '&7which can support messages,'
+        - '&7sounds, potion effects,'
+        - '&7and commands when right-clicked.'
+        - '&7It must be customized in'
+        - '&7the kit file.'
       Material: EMERALD
     8:
       Name: '&aSecond Ability Item &7(Unlimited custom abilities per kit!)'
@@ -82,10 +82,10 @@ Inventory:
     Fill:
       Name: '&aFill Item'
       Lore:
-      - '&7This is a fill item which'
-      - '&7can fill up any blank slots'
-      - '&7in a kit. You must customize'
-      - '&7this in the kit file.'
+        - '&7This is a fill item which'
+        - '&7can fill up any blank slots'
+        - '&7in a kit. You must customize'
+        - '&7this in the kit file.'
       Material: COOKIE
 Abilities:
   SampleAbility:

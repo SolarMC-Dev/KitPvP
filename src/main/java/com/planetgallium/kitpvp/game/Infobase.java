@@ -1,16 +1,22 @@
 package com.planetgallium.kitpvp.game;
 
 import com.planetgallium.kitpvp.Game;
-import com.planetgallium.kitpvp.util.*;
-import com.zp4rker.localdb.Column;
-import com.zp4rker.localdb.DataType;
-import com.zp4rker.localdb.Database;
-import com.zp4rker.localdb.Table;
+import com.planetgallium.kitpvp.shaded.localdb.Column;
+import com.planetgallium.kitpvp.shaded.localdb.DataType;
+import com.planetgallium.kitpvp.shaded.localdb.Database;
+import com.planetgallium.kitpvp.shaded.localdb.Table;
+import com.planetgallium.kitpvp.util.CacheManager;
+import com.planetgallium.kitpvp.util.PlayerEntry;
+import com.planetgallium.kitpvp.util.Resource;
+import com.planetgallium.kitpvp.util.Resources;
+import com.planetgallium.kitpvp.util.Toolkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Infobase {
 

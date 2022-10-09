@@ -5,7 +5,11 @@ import com.planetgallium.kitpvp.util.Resource;
 import com.planetgallium.kitpvp.util.Toolkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.*;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
@@ -51,9 +55,9 @@ public class AttributeWriter {
     private static void serializeDyedArmor(Resource resource, ItemStack item, String path) {
 
         if (item.getType() == XMaterial.LEATHER_HELMET.parseMaterial() ||
-            item.getType() == XMaterial.LEATHER_CHESTPLATE.parseMaterial() ||
-            item.getType() == XMaterial.LEATHER_LEGGINGS.parseMaterial() ||
-            item.getType() == XMaterial.LEATHER_BOOTS.parseMaterial()) {
+                item.getType() == XMaterial.LEATHER_CHESTPLATE.parseMaterial() ||
+                item.getType() == XMaterial.LEATHER_LEGGINGS.parseMaterial() ||
+                item.getType() == XMaterial.LEATHER_BOOTS.parseMaterial()) {
 
             LeatherArmorMeta dyedMeta = (LeatherArmorMeta) item.getItemMeta();
 
@@ -136,7 +140,7 @@ public class AttributeWriter {
         if (item.getType() == XMaterial.POTION.parseMaterial() ||
                 (Toolkit.versionToNumber() >= 19 &&
                         (item.getType() == XMaterial.SPLASH_POTION.parseMaterial() ||
-                        item.getType() == XMaterial.LINGERING_POTION.parseMaterial()))) {
+                                item.getType() == XMaterial.LINGERING_POTION.parseMaterial()))) {
 
             serializeEffects(resource, item, path);
 

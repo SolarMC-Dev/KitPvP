@@ -4,7 +4,10 @@ import com.cryptomorin.xseries.XSound;
 import com.planetgallium.kitpvp.Game;
 import com.planetgallium.kitpvp.api.Kit;
 import com.planetgallium.kitpvp.game.Arena;
-import com.planetgallium.kitpvp.util.*;
+import com.planetgallium.kitpvp.util.CacheManager;
+import com.planetgallium.kitpvp.util.Resource;
+import com.planetgallium.kitpvp.util.Resources;
+import com.planetgallium.kitpvp.util.Toolkit;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -238,9 +241,9 @@ public class MainCommand implements CommandExecutor {
                             int amount = Integer.parseInt(possibleAmount);
                             arena.getStats().setStat(statsIdentifier, playerName, amount);
                             sender.sendMessage(resources.getMessages().getString("Messages.Commands.SetStats")
-                                                       .replace("%player%", playerName)
-                                                       .replace("%amount%", String.valueOf(amount))
-                                                       .replace("%type%", statsIdentifier));
+                                    .replace("%player%", playerName)
+                                    .replace("%amount%", String.valueOf(amount))
+                                    .replace("%type%", statsIdentifier));
                             return true;
 
                         } else {
@@ -250,15 +253,15 @@ public class MainCommand implements CommandExecutor {
                     } else {
 
                         sender.sendMessage(resources.getMessages().getString("Messages.Error.InvalidNumber")
-                                                   .replace("%number%", possibleAmount));
+                                .replace("%number%", possibleAmount));
 
                     }
 
                 } else {
 
                     sender.sendMessage(resources.getMessages().getString("Messages.Error.InvalidType")
-                                               .replace("%type%", statsIdentifier)
-                                               .replace("%types%", "kills, deaths, level, experience"));
+                            .replace("%type%", statsIdentifier)
+                            .replace("%types%", "kills, deaths, level, experience"));
 
                 }
 

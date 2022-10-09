@@ -1,12 +1,15 @@
-package com.zp4rker.localdb.db;
+package com.planetgallium.kitpvp.shaded.localdb.db;
 
+import com.planetgallium.kitpvp.shaded.localdb.Database;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import com.zp4rker.localdb.Database;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 
 public class SQLite {
@@ -86,18 +89,18 @@ public class SQLite {
             Error.close(plugin, ex);
         }
     }
-    
+
     public void closeConnection() {
-    	try {
-    		if (!(connection.isClosed())) {
-        		connection.close();
-        		connection = null;
-        	} else {
-        		connection = null;
-        	}
-    	} catch(Exception e) {
-    		Error.close(plugin, e);
-    	}
+        try {
+            if (!(connection.isClosed())) {
+                connection.close();
+                connection = null;
+            } else {
+                connection = null;
+            }
+        } catch (Exception e) {
+            Error.close(plugin, e);
+        }
     }
 
 }

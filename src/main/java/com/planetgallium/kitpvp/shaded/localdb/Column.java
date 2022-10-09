@@ -1,4 +1,4 @@
-package com.zp4rker.localdb;
+package com.planetgallium.kitpvp.shaded.localdb;
 
 public class Column {
 

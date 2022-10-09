@@ -1,8 +1,10 @@
 package com.planetgallium.kitpvp.listener;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.planetgallium.kitpvp.Game;
 import com.planetgallium.kitpvp.game.Arena;
 import com.planetgallium.kitpvp.util.Resources;
+import com.planetgallium.kitpvp.util.Toolkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,92 +13,87 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.planetgallium.kitpvp.Game;
-import com.planetgallium.kitpvp.util.Toolkit;
-
 public class TrackerListener implements Listener {
 
-	private final Game plugin;
-	private final Arena arena;
-	private final Resources resources;
-	
-	public TrackerListener(Game plugin) {
-		this.plugin = plugin;
-		this.arena = plugin.getArena();
-		this.resources = plugin.getResources();
-	}
-	
-	@EventHandler
-	public void onCompassHeld(PlayerItemHeldEvent event) {
+    private final Game plugin;
+    private final Arena arena;
+    private final Resources resources;
 
-		if (!Toolkit.inArena(event.getPlayer())) {
-			return;
-		}
+    public TrackerListener(Game plugin) {
+        this.plugin = plugin;
+        this.arena = plugin.getArena();
+        this.resources = plugin.getResources();
+    }
 
-		Player player = event.getPlayer();
-		ItemStack itemHeld = player.getInventory().getItem(event.getNewSlot());
+    @EventHandler
+    public void onCompassHeld(PlayerItemHeldEvent event) {
 
-		if (itemHeld != null && itemHeld.getType() == XMaterial.COMPASS.parseMaterial()) {
+        if (!Toolkit.inArena(event.getPlayer())) {
+            return;
+        }
 
-			new BukkitRunnable() {
+        Player player = event.getPlayer();
+        ItemStack itemHeld = player.getInventory().getItem(event.getNewSlot());
 
-				@Override
-				public void run() {
+        if (itemHeld != null && itemHeld.getType() == XMaterial.COMPASS.parseMaterial()) {
 
-					// if the player using the compass leaves the server or no longer has a kit
-					if (!player.isOnline() || !arena.getKits().hasKit(player.getName())) {
-						cancel();
-						return;
-					}
+            new BukkitRunnable() {
 
-					if (resources.getConfig().getBoolean("PlayerTracker.RefreshOnlyWhenHeld")) {
-						ItemStack itemInHand = Toolkit.getMainHandItem(player);
-						if (itemInHand == null || itemInHand.getType() != XMaterial.COMPASS.parseMaterial()) {
-							cancel();
-							return;
-						}
-					}
+                @Override
+                public void run() {
 
-					String[] nearestPlayerData = null;
+                    // if the player using the compass leaves the server or no longer has a kit
+                    if (!player.isOnline() || !arena.getKits().hasKit(player.getName())) {
+                        cancel();
+                        return;
+                    }
 
-					if (player.getWorld().getPlayers().size() == 1) {
-						cancel();
-					} else {
-						nearestPlayerData = Toolkit.getNearestPlayer(player,
-												 resources.getConfig().getInt("PlayerTracker.TrackBelowY"));
-					}
+                    if (resources.getConfig().getBoolean("PlayerTracker.RefreshOnlyWhenHeld")) {
+                        ItemStack itemInHand = Toolkit.getMainHandItem(player);
+                        if (itemInHand == null || itemInHand.getType() != XMaterial.COMPASS.parseMaterial()) {
+                            cancel();
+                            return;
+                        }
+                    }
 
-					updateTrackingCompass(player, itemHeld, nearestPlayerData);
+                    String[] nearestPlayerData = null;
 
-				}
+                    if (player.getWorld().getPlayers().size() == 1) {
+                        cancel();
+                    } else {
+                        nearestPlayerData = Toolkit.getNearestPlayer(player,
+                                resources.getConfig().getInt("PlayerTracker.TrackBelowY"));
+                    }
 
-			}.runTaskTimer(plugin, 0L, 20L);
+                    updateTrackingCompass(player, itemHeld, nearestPlayerData);
 
-		}
-		
-	}
+                }
 
-	private void updateTrackingCompass(Player player, ItemStack compass, String[] nearestPlayerData) {
+            }.runTaskTimer(plugin, 0L, 20L);
 
-		ItemMeta compassMeta = compass.getItemMeta();
+        }
 
-		if (nearestPlayerData != null) {
-			Player nearestPlayer = Toolkit.getPlayer(player.getWorld(), nearestPlayerData[0]);
-			double nearestPlayerDistance = Toolkit.round(Double.parseDouble(nearestPlayerData[1]), 1);
+    }
 
-			if (nearestPlayer != null && nearestPlayer.isOnline()) {
-				compassMeta.setDisplayName(resources.getConfig().getString("PlayerTracker.Message")
-												   .replace("%nearestplayer%", nearestPlayer.getName())
-												   .replace("%distance%", String.valueOf(nearestPlayerDistance)));
+    private void updateTrackingCompass(Player player, ItemStack compass, String[] nearestPlayerData) {
 
-				player.setCompassTarget(nearestPlayer.getLocation());
-			}
-		} else {
-			compassMeta.setDisplayName(resources.getConfig().getString("PlayerTracker.NoneOnline"));
-		}
+        ItemMeta compassMeta = compass.getItemMeta();
 
-		compass.setItemMeta(compassMeta);
+        if (nearestPlayerData != null) {
+            Player nearestPlayer = Toolkit.getPlayer(player.getWorld(), nearestPlayerData[0]);
+            double nearestPlayerDistance = Toolkit.round(Double.parseDouble(nearestPlayerData[1]), 1);
 
-	}
-	
+            if (nearestPlayer != null && nearestPlayer.isOnline()) {
+                compassMeta.setDisplayName(resources.getConfig().getString("PlayerTracker.Message")
+                        .replace("%nearestplayer%", nearestPlayer.getName())
+                        .replace("%distance%", String.valueOf(nearestPlayerDistance)));
+
+                player.setCompassTarget(nearestPlayer.getLocation());
+            }
+        } else {
+            compassMeta.setDisplayName(resources.getConfig().getString("PlayerTracker.NoneOnline"));
+        }
+
+        compass.setItemMeta(compassMeta);
+    }
 }

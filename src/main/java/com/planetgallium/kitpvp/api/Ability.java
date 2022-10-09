@@ -100,22 +100,40 @@ public class Ability {
 
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public ItemStack getActivator() { return activator; }
+    public ItemStack getActivator() {
+        return activator;
+    }
 
-    public Cooldown getCooldown() { return cooldown; }
+    public Cooldown getCooldown() {
+        return cooldown;
+    }
 
-    public String getMessage() { return message; }
+    public String getMessage() {
+        return message;
+    }
 
-    public Sound getSound() { return sound; }
+    public Sound getSound() {
+        return sound;
+    }
 
-    public int getSoundPitch() { return soundPitch; }
+    public int getSoundPitch() {
+        return soundPitch;
+    }
 
-    public int getSoundVolume() { return soundVolume; }
+    public int getSoundVolume() {
+        return soundVolume;
+    }
 
-    public List<PotionEffect> getEffects() { return effects; }
+    public List<PotionEffect> getEffects() {
+        return effects;
+    }
 
-    public List<String> getCommands() { return commands; }
+    public List<String> getCommands() {
+        return commands;
+    }
 
 }

@@ -1,66 +1,64 @@
 package com.planetgallium.kitpvp.game;
 
-import java.util.UUID;
-
 import com.planetgallium.kitpvp.Game;
 import com.planetgallium.kitpvp.api.Ability;
 import com.planetgallium.kitpvp.api.Kit;
+import com.planetgallium.kitpvp.shaded.localdb.DataType;
 import com.planetgallium.kitpvp.util.CacheManager;
 import com.planetgallium.kitpvp.util.Cooldown;
-import com.zp4rker.localdb.DataType;
 import org.bukkit.entity.Player;
 
 public class Cooldowns {
 
-	private Infobase database;
-	
-	public Cooldowns(Game plugin) {
-		this.database = plugin.getDatabase();
-	}
+    private Infobase database;
 
-	public void setAbilityCooldown(String playerName, String abilityName) {
-		CacheManager.getPlayerAbilityCooldowns(playerName).put(abilityName, (System.currentTimeMillis() / 1000));
-	}
+    public Cooldowns(Game plugin) {
+        this.database = plugin.getDatabase();
+    }
 
-	public void setKitCooldown(String username, String kitName) {
-		database.setData(kitName + "_cooldowns", "last_used", (System.currentTimeMillis() / 1000), DataType.INTEGER, username);
-	}
+    public void setAbilityCooldown(String playerName, String abilityName) {
+        CacheManager.getPlayerAbilityCooldowns(playerName).put(abilityName, (System.currentTimeMillis() / 1000));
+    }
 
-	public Cooldown getRemainingCooldown(Player p, Object type) {
+    public void setKitCooldown(String username, String kitName) {
+        database.setData(kitName + "_cooldowns", "last_used", (System.currentTimeMillis() / 1000), DataType.INTEGER, username);
+    }
 
-		long currentTimeSeconds = (System.currentTimeMillis() / 1000);
-		int timeLastUsedSeconds = 0;
-		int actionCooldownSeconds = 0;
-		Cooldown noCooldown = new Cooldown(0, 0, 0, 0);
+    public Cooldown getRemainingCooldown(Player p, Object type) {
 
-		if (type instanceof Kit) {
+        long currentTimeSeconds = (System.currentTimeMillis() / 1000);
+        int timeLastUsedSeconds = 0;
+        int actionCooldownSeconds = 0;
+        Cooldown noCooldown = new Cooldown(0, 0, 0, 0);
 
-			Kit kit = (Kit) type;
-			if (kit.getCooldown() == null) return noCooldown;
+        if (type instanceof Kit) {
 
-			Object timeLastUsedResult = database.getData(kit.getName() + "_cooldowns", "last_used", p.getName());
-			if (timeLastUsedResult != null) {
-				timeLastUsedSeconds = (int) timeLastUsedResult;
-			} else {
-				return noCooldown;
-			}
-			actionCooldownSeconds = kit.getCooldown().toSeconds();
+            Kit kit = (Kit) type;
+            if (kit.getCooldown() == null) return noCooldown;
 
-		} else if (type instanceof Ability) {
+            Object timeLastUsedResult = database.getData(kit.getName() + "_cooldowns", "last_used", p.getName());
+            if (timeLastUsedResult != null) {
+                timeLastUsedSeconds = (int) timeLastUsedResult;
+            } else {
+                return noCooldown;
+            }
+            actionCooldownSeconds = kit.getCooldown().toSeconds();
 
-			Ability ability = (Ability) type;
-			if (ability.getCooldown() == null ||
-					!CacheManager.getPlayerAbilityCooldowns(p.getName()).containsKey(ability.getName()))
-				return noCooldown;
+        } else if (type instanceof Ability) {
 
-			timeLastUsedSeconds = CacheManager.getPlayerAbilityCooldowns(p.getName()).get(ability.getName()).intValue();
-			actionCooldownSeconds = ability.getCooldown().toSeconds();
+            Ability ability = (Ability) type;
+            if (ability.getCooldown() == null ||
+                    !CacheManager.getPlayerAbilityCooldowns(p.getName()).containsKey(ability.getName()))
+                return noCooldown;
 
-		}
+            timeLastUsedSeconds = CacheManager.getPlayerAbilityCooldowns(p.getName()).get(ability.getName()).intValue();
+            actionCooldownSeconds = ability.getCooldown().toSeconds();
 
-		int cooldownRemainingSeconds = (int) (timeLastUsedSeconds + actionCooldownSeconds - currentTimeSeconds);
-		return new Cooldown(cooldownRemainingSeconds);
+        }
 
-	}
-	
+        int cooldownRemainingSeconds = (int) (timeLastUsedSeconds + actionCooldownSeconds - currentTimeSeconds);
+        return new Cooldown(cooldownRemainingSeconds);
+
+    }
+
 }

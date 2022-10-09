@@ -2,7 +2,9 @@ package com.planetgallium.kitpvp.listener;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
-import com.planetgallium.kitpvp.util.*;
+import com.planetgallium.kitpvp.Game;
+import com.planetgallium.kitpvp.util.Resource;
+import com.planetgallium.kitpvp.util.Toolkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,137 +15,128 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.planetgallium.kitpvp.Game;
+import java.util.Objects;
 
 public class SoupListener implements Listener {
-	
-	private Resource config;
-	private int soupBoost;
-	
-	public SoupListener(Game plugin) {
-		this.config = plugin.getResources().getConfig();
-		this.soupBoost = plugin.getConfig().getInt("Soups.RegenAmount");
-	}
-	
-	@EventHandler
-	public void onDamage(PlayerDeathEvent e) {
-		
-		Player victim = e.getEntity();
-		
-		if (Toolkit.inArena(victim)) {
-			
-			if (victim.getKiller() != null && victim.getKiller() instanceof Player) {
-				
-				Player killer = victim.getKiller();
-				
-				if (config.getBoolean("Kill.SoupReward.Enabled")) {
-					
-					if (killer.hasPermission("kp.soupreturn")) {
-					
-						new BukkitRunnable() {
-							
-							@Override
-							public void run() {
-								
-								if (killer != null) { // incase they logged off
-									
-									int count = 0;
-									for (int i = 0; i < 36; i++) {
-										if (killer.getInventory().getItem(i) == null) {
-											count++;
-										}
-									}
-									
-									if (count < config.getInt("Kill.SoupReward.Amount")) {
-										killer.sendMessage(config.getString("Kill.SoupReward.NoSpace").replace("%amount%", String.valueOf((config.getInt("Kill.SoupReward.Amount") - count))));
-									} else {
-										count = config.getInt("Kill.SoupReward.Amount");
-									}
 
-									ItemStack soup = XMaterial.MUSHROOM_STEW.parseItem();
-									ItemMeta soupMeta = soup.getItemMeta();
+    private final Resource config;
+    private final int soupBoost;
 
-									soupMeta.setDisplayName(config.getString("Soups.Name"));
-									soupMeta.setLore(Toolkit.colorizeList(config.getStringList("Soups.Lore")));
+    public SoupListener(Game plugin) {
+        this.config = plugin.getResources().getConfig();
+        this.soupBoost = plugin.getConfig().getInt("Soups.RegenAmount");
+    }
 
-									soup.setItemMeta(soupMeta);
+    @EventHandler
+    public void onDamage(PlayerDeathEvent e) {
 
-									for (int r = 0; r < count; r++) {
-										killer.getInventory().addItem(soup);
-									}
-									
-								}
-								
-							}
-							
-						}.runTaskLater(Game.getInstance(), config.getInt("Kill.SoupReward.Delay") * 20);
-						
-					}
-					
-				}
-				
-			}
-			
-		}
-		
-	}
-	
-	@EventHandler
-	public void useSoup(PlayerInteractEvent e) {
-	    
-		if (config.getBoolean("Soups.Enabled")) {
-			
-			Player p = e.getPlayer();
-			
-			if (Toolkit.inArena(p)) {
+        Player victim = e.getEntity();
 
-				if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (Toolkit.inArena(victim)) {
 
-					if (Toolkit.getMainHandItem(p).getType() == XMaterial.MUSHROOM_STEW.parseMaterial() || Toolkit.getOffhandItem(p).getType() == XMaterial.MUSHROOM_STEW.parseMaterial()) {
+            if (victim.getKiller() != null && victim.getKiller() != null) {
 
-						e.setCancelled(true);
+                Player killer = victim.getKiller();
 
-						if (p.getHealth() < 20.0) {
+                if (config.getBoolean("Kill.SoupReward.Enabled")) {
 
-							p.setHealth(p.getHealth() + (double) soupBoost >= 20.0 ? 20.0 : p.getHealth() + (double) soupBoost);
-							p.playSound(p.getLocation(), XSound.matchXSound(config.getString("Soups.Sound")).get().parseSound(), 1, (float) config.getInt("Soups.Pitch"));
+                    if (killer.hasPermission("kp.soupreturn")) {
 
-							if (Toolkit.getMainHandItem(p).getType() == XMaterial.MUSHROOM_STEW.parseMaterial()) {
+                        new BukkitRunnable() {
 
-								if (config.getBoolean("Soups.RemoveAfterUse")) {
+                            @Override
+                            public void run() {
+                                int count = 0;
+                                for (int i = 0; i < 36; i++) {
+                                    if (killer.getInventory().getItem(i) == null) {
+                                        count++;
+                                    }
+                                }
 
-									Toolkit.setMainHandItem(p, new ItemStack(XMaterial.AIR.parseItem()));
+                                if (count < config.getInt("Kill.SoupReward.Amount")) {
+                                    killer.sendMessage(config.getString("Kill.SoupReward.NoSpace").replace("%amount%", String.valueOf((config.getInt("Kill.SoupReward.Amount") - count))));
+                                } else {
+                                    count = config.getInt("Kill.SoupReward.Amount");
+                                }
 
-								} else {
+                                ItemStack soup = XMaterial.MUSHROOM_STEW.parseItem();
+                                ItemMeta soupMeta = soup.getItemMeta();
 
-									Toolkit.setMainHandItem(p, new ItemStack(XMaterial.BOWL.parseItem()));
+                                soupMeta.setDisplayName(config.getString("Soups.Name"));
+                                soupMeta.setLore(Toolkit.colorizeList(config.getStringList("Soups.Lore")));
 
-								}
+                                soup.setItemMeta(soupMeta);
 
-							} else if (Toolkit.getOffhandItem(p).getType() == XMaterial.MUSHROOM_STEW.parseMaterial()) {
+                                for (int r = 0; r < count; r++) {
+                                    killer.getInventory().addItem(soup);
+                                }
 
-								if (config.getBoolean("Soups.RemoveAfterUse")) {
+                            }
 
-									Toolkit.setOffhandItem(p, new ItemStack(XMaterial.AIR.parseItem()));
+                        }.runTaskLater(Game.getInstance(), config.getInt("Kill.SoupReward.Delay") * 20L);
+                    }
+                }
+            }
+        }
 
-								} else {
+    }
 
-									Toolkit.setOffhandItem(p, new ItemStack(XMaterial.BOWL.parseItem()));
+    @EventHandler
+    public void useSoup(PlayerInteractEvent e) {
 
-								}
+        if (config.getBoolean("Soups.Enabled")) {
 
-							}
+            Player p = e.getPlayer();
 
-						}
+            if (Toolkit.inArena(p)) {
 
-					}
+                if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
-				}
-				
-			}
-			
-		}
-		
-	}
-	
+                    if (Toolkit.getMainHandItem(p).getType() == XMaterial.MUSHROOM_STEW.parseMaterial() || Toolkit.getOffhandItem(p).getType() == XMaterial.MUSHROOM_STEW.parseMaterial()) {
+
+                        e.setCancelled(true);
+
+                        if (p.getHealth() < 20.0) {
+
+                            p.setHealth(Math.min(p.getHealth() + (double) soupBoost, 20.0));
+                            p.playSound(p.getLocation(), Objects.requireNonNull(XSound.matchXSound(Objects.requireNonNull(config.getString("Soups.Sound"))).get().parseSound()), 1, (float) config.getInt("Soups.Pitch"));
+
+                            if (Toolkit.getMainHandItem(p).getType() == XMaterial.MUSHROOM_STEW.parseMaterial()) {
+
+                                if (config.getBoolean("Soups.RemoveAfterUse")) {
+
+                                    Toolkit.setMainHandItem(p, new ItemStack(XMaterial.AIR.parseItem()));
+
+                                } else {
+
+                                    Toolkit.setMainHandItem(p, new ItemStack(XMaterial.BOWL.parseItem()));
+
+                                }
+
+                            } else if (Toolkit.getOffhandItem(p).getType() == XMaterial.MUSHROOM_STEW.parseMaterial()) {
+
+                                if (config.getBoolean("Soups.RemoveAfterUse")) {
+
+                                    Toolkit.setOffhandItem(p, new ItemStack(XMaterial.AIR.parseItem()));
+
+                                } else {
+
+                                    Toolkit.setOffhandItem(p, new ItemStack(XMaterial.BOWL.parseItem()));
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
 }

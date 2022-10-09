@@ -8,8 +8,11 @@ import com.planetgallium.kitpvp.api.Ability;
 import com.planetgallium.kitpvp.api.Kit;
 import com.planetgallium.kitpvp.api.PlayerSelectKitEvent;
 import com.planetgallium.kitpvp.item.AttributeParser;
-import com.planetgallium.kitpvp.util.*;
-import com.zp4rker.localdb.Table;
+import com.planetgallium.kitpvp.util.CacheManager;
+import com.planetgallium.kitpvp.util.Cooldown;
+import com.planetgallium.kitpvp.util.Resource;
+import com.planetgallium.kitpvp.util.Resources;
+import com.planetgallium.kitpvp.util.Toolkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,9 +20,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Kits {
 
@@ -84,7 +88,7 @@ public class Kits {
     public Kit createKitFromPlayer(Player player, String name) {
 
         Player p = player;
-        
+
         //          KIT             //
 
         Kit kit = new Kit(name);
@@ -118,7 +122,7 @@ public class Kits {
                 kit.setInventoryItem(i, item);
             }
         }
-        
+
         if (Toolkit.versionToNumber() >= 19) {
             ItemStack offhandItem = p.getInventory().getItemInOffHand();
             if (offhandItem != null) {

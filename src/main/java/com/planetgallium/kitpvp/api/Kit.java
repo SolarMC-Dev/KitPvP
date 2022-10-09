@@ -176,30 +176,56 @@ public class Kit {
 
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public String getPermission() { return permission; }
+    public String getPermission() {
+        return permission;
+    }
 
-    public Cooldown getCooldown() { return cooldown; }
+    public Cooldown getCooldown() {
+        return cooldown;
+    }
 
-    public int getLevel() { return level; }
+    public int getLevel() {
+        return level;
+    }
 
-    public int getHealth() { return health; }
+    public int getHealth() {
+        return health;
+    }
 
-    public Map<Integer, ItemStack> getInventory() { return inventory; }
+    public Map<Integer, ItemStack> getInventory() {
+        return inventory;
+    }
 
-    public List<PotionEffect> getEffects() { return effects; }
+    public List<PotionEffect> getEffects() {
+        return effects;
+    }
 
-    public List<Ability> getAbilities() { return abilities; }
+    public List<Ability> getAbilities() {
+        return abilities;
+    }
 
-    public ItemStack getHelmet() { return helmet; }
+    public ItemStack getHelmet() {
+        return helmet;
+    }
 
-    public ItemStack getChestplate() { return chestplate; }
+    public ItemStack getChestplate() {
+        return chestplate;
+    }
 
-    public ItemStack getLeggings() { return leggings; }
+    public ItemStack getLeggings() {
+        return leggings;
+    }
 
-    public ItemStack getBoots() { return boots; }
+    public ItemStack getBoots() {
+        return boots;
+    }
 
-    public ItemStack getFill() { return fill; }
+    public ItemStack getFill() {
+        return fill;
+    }
 
 }

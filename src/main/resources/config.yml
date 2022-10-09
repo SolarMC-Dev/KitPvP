@@ -9,7 +9,7 @@ Items:
     Material: CHEST
     Slot: 0
     Menu: true
-    Commands: []
+    Commands: [ ]
   Leave:
     Enabled: true
     Name: '&aReturn to Hub &7(Right Click)'
@@ -18,7 +18,7 @@ Items:
     BungeeCord:
       Server: Hub
       Enabled: false
-    Commands: []
+    Commands: [ ]
 Chat:
   Format: '%level% &e%player% &f%message%'
   Enabled: true
@@ -40,7 +40,7 @@ Kill:
     Amount: 1
     Delay: 0
     Enabled: true
-  Commands: []
+  Commands: [ ]
 Death:
   Title:
     Title: '&c&lYOU DIED!'
@@ -51,7 +51,7 @@ Death:
     Sound: AMBIENCE_THUNDER
     Pitch: 1
     Enabled: false
-  Commands: []
+  Commands: [ ]
   Messages:
     Player: '%prefix% &b%victim% &7was killed by &b%killer% &7(&c%killer_health%&7).'
     Shot: '%prefix% &b%victim% &7was shot by &b%killer% &7(&c%killer_health%&7).'
@@ -62,8 +62,12 @@ Death:
     Suicide: '%prefix% &b%victim% &7killed themselves.'
     Unknown: '%prefix% &b%victim% &7died.'
     Enabled: true
+  Assist:
+    Time: 15
+    Reward: 75
+    Max-Assisters: 5
 Respawn:
-  Commands: []
+  Commands: [ ]
 PlayerTracker:
   Name: '&aPlayer Tracker'
   Message: '&b&lTarget: &3%nearestplayer% &b&lDistance: &3%distance%'
@@ -75,7 +79,7 @@ Soups:
   RegenAmount: 6
   RemoveAfterUse: true
   Lore:
-  - '&7Use this item to regain health.'
+    - '&7Use this item to regain health.'
   Sound: EAT
   Pitch: 1
   Enabled: true
@@ -83,7 +87,7 @@ TNT:
   Name: '&aThrowable TNT &7(Right Click)'
   Enabled: true
 PreviewMenuBackArrowCommands:
-- 'player: kp menu'
+  - 'player: kp menu'
 Commands:
   Alias:
     Spawn: false

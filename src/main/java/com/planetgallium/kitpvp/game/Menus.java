@@ -17,10 +17,16 @@ public class Menus {
         this.refillMenu = new RefillMenu(resources);
     }
 
-    public KitMenu getKitMenu() { return kitMenu; }
+    public KitMenu getKitMenu() {
+        return kitMenu;
+    }
 
-    public PreviewMenu getPreviewMenu() { return previewMenu; }
+    public PreviewMenu getPreviewMenu() {
+        return previewMenu;
+    }
 
-    public RefillMenu getRefillMenu() { return refillMenu; }
+    public RefillMenu getRefillMenu() {
+        return refillMenu;
+    }
 
 }

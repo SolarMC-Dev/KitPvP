@@ -6,19 +6,33 @@ import com.cryptomorin.xseries.XPotion;
 import com.cryptomorin.xseries.XSound;
 import com.planetgallium.kitpvp.Game;
 import com.planetgallium.kitpvp.api.Ability;
-import com.planetgallium.kitpvp.util.*;
+import com.planetgallium.kitpvp.util.Cooldown;
+import com.planetgallium.kitpvp.util.Resource;
+import com.planetgallium.kitpvp.util.Toolkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.*;
-import org.bukkit.potion.*;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class AttributeParser {
 
@@ -144,7 +158,7 @@ public class AttributeParser {
                 item.setType(possibleMaterial.get().parseMaterial());
             } else {
                 Toolkit.printToConsole(String.format("&7[&b&lKIT-PVP&7] &cUnknown material [%s], defaulting to [%s].",
-                                                     materialValue, FALLBACK_ITEM_MATERIAL));
+                        materialValue, FALLBACK_ITEM_MATERIAL));
             }
         }
 
@@ -344,11 +358,20 @@ public class AttributeParser {
     private static int getVanillaLevel(PotionType type, boolean isUpgraded) {
 
         switch (type) {
-            case INVISIBILITY: case FIRE_RESISTANCE: case NIGHT_VISION:
-                case SLOWNESS: case WATER_BREATHING: case WEAKNESS:
+            case INVISIBILITY:
+            case FIRE_RESISTANCE:
+            case NIGHT_VISION:
+            case SLOWNESS:
+            case WATER_BREATHING:
+            case WEAKNESS:
                 return 1;
-            case INSTANT_DAMAGE: case INSTANT_HEAL: case JUMP: case POISON:
-                case REGEN: case SPEED: case STRENGTH:
+            case INSTANT_DAMAGE:
+            case INSTANT_HEAL:
+            case JUMP:
+            case POISON:
+            case REGEN:
+            case SPEED:
+            case STRENGTH:
                 return isUpgraded ? 2 : 1;
         }
 

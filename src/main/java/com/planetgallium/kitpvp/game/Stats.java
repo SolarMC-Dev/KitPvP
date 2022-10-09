@@ -3,8 +3,13 @@ package com.planetgallium.kitpvp.game;
 import com.cryptomorin.xseries.XSound;
 import com.planetgallium.kitpvp.Game;
 import com.planetgallium.kitpvp.api.PlayerLevelUpEvent;
-import com.planetgallium.kitpvp.util.*;
-import com.zp4rker.localdb.DataType;
+import com.planetgallium.kitpvp.shaded.localdb.DataType;
+import com.planetgallium.kitpvp.util.CacheManager;
+import com.planetgallium.kitpvp.util.PlayerData;
+import com.planetgallium.kitpvp.util.PlayerEntry;
+import com.planetgallium.kitpvp.util.Resource;
+import com.planetgallium.kitpvp.util.Resources;
+import com.planetgallium.kitpvp.util.Toolkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -86,7 +91,7 @@ public class Stats {
             }
 
             p.sendMessage(resources.getMessages().getString("Messages.Other.Level")
-                                  .replace("%level%", String.valueOf(newLevel)));
+                    .replace("%level%", String.valueOf(newLevel)));
             XSound.play(p, "ENTITY_PLAYER_LEVELUP, 1, 1");
 
         } else {

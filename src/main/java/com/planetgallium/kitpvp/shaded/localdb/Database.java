@@ -1,8 +1,7 @@
-package com.zp4rker.localdb;
+package com.planetgallium.kitpvp.shaded.localdb;
 
+import com.planetgallium.kitpvp.shaded.localdb.db.SQLite;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import com.zp4rker.localdb.db.SQLite;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

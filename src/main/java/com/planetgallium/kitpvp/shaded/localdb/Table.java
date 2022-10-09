@@ -1,4 +1,7 @@
-package com.zp4rker.localdb;
+package com.planetgallium.kitpvp.shaded.localdb;
+
+import com.planetgallium.kitpvp.shaded.localdb.db.SQLite;
+import com.planetgallium.kitpvp.util.PlayerEntry;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,9 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.planetgallium.kitpvp.util.PlayerEntry;
-import com.zp4rker.localdb.db.SQLite;
 
 public class Table {
 
@@ -49,11 +49,15 @@ public class Table {
     }
 
     private static String getStringType(DataType dataType) {
-        switch(dataType) {
-            case STRING: return "VARCHAR";
-            case INTEGER: return "INT";
-            case FLOAT: return "FLOAT";
-            default: return null;
+        switch (dataType) {
+            case STRING:
+                return "VARCHAR";
+            case INTEGER:
+                return "INT";
+            case FLOAT:
+                return "FLOAT";
+            default:
+                return null;
         }
     }
 
@@ -122,7 +126,7 @@ public class Table {
             System.out.println("A row with that name already exists!");
         }
     }
-    
+
     public List<Column> getExact(Column column) {
         List<Column> result = new ArrayList<>();
         String query = "SELECT * FROM " + getName() + " WHERE `" + column.getName() + "`=?";
@@ -175,7 +179,7 @@ public class Table {
 
             while (resultSet.next()) {
                 topNResults.add(new PlayerEntry(resultSet.getString(returnColumn.getName()),
-                                                resultSet.getInt(sortColumn.getName())));
+                        resultSet.getInt(sortColumn.getName())));
             }
             sqLite.close(statement, resultSet);
 
@@ -185,7 +189,7 @@ public class Table {
 
         return topNResults;
     }
-    
+
     public List<List<Column>> search(Column column) {
         List<List<Column>> results = new ArrayList<>();
         if (!column.getName().equalsIgnoreCase(primaryKey.getName())) {
@@ -250,7 +254,7 @@ public class Table {
             e.printStackTrace();
         }
     }
-    
+
     public List<List<Column>> getAll() {
         List<List<Column>> results = new ArrayList<>();
         String query = "SELECT * FROM " + getName();

@@ -1,7 +1,5 @@
 package com.planetgallium.kitpvp.util;
 
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,77 +9,87 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 public class Menu {
 
-	private final String title;
-	private final int size;
-	private final Inventory menu;
-	private final InventoryHolder owner;
-	
-	public Menu(String title, InventoryHolder owner, int size) {
-		
-		menu = Bukkit.createInventory(owner, size, Toolkit.translate(title));
-		this.title = title;
-		this.size = size;
-		this.owner = owner;
-		
-	}
-	
-	public void addItem(String name, Material material, List<String> lore, int slot) {
-		
-		ItemStack item = new ItemStack(material);
-		ItemMeta meta = item.getItemMeta();
-		
-		lore.replaceAll(s -> ChatColor.translateAlternateColorCodes('&', s));
-		
-		meta.setDisplayName(Toolkit.translate(name));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
-		
-		menu.setItem(slot, item);
-		
-	}
-	
-	public void addItem(String name, Material material, List<String> lore, int amount, int slot) {
-		
-		ItemStack item = new ItemStack(material);
-		ItemMeta meta = item.getItemMeta();
-		
-		lore.replaceAll(s -> ChatColor.translateAlternateColorCodes('&', s));
-		
-		meta.setDisplayName(Toolkit.translate(name));
-		meta.setLore(lore);
-		item.setAmount(amount > 0 ? amount : 1);
-		item.setItemMeta(meta);
-		
-		menu.setItem(slot, item);
-		
-	}
+    private final String title;
+    private final int size;
+    private final Inventory menu;
+    private final InventoryHolder owner;
 
-	public void setItem(ItemStack item, int slot) {
+    public Menu(String title, InventoryHolder owner, int size) {
 
-		menu.setItem(slot, item);
+        menu = Bukkit.createInventory(owner, size, Toolkit.translate(title));
+        this.title = title;
+        this.size = size;
+        this.owner = owner;
 
-	}
-	
-	public void openMenu(Player p) {
-		
-		p.openInventory(menu);
-	
-	}
-	
-	public void closeMenu(Player p) {
-		
-		p.closeInventory();
-		
-	}
-	
-	public ItemStack getSlot(int slot) { return menu.getItem(slot); }
-	
-	public String getTitle() { return title; }
-	
-	public InventoryHolder getOwner() { return owner; }
-	
-	public int getSize() { return size; }
-	
+    }
+
+    public void addItem(String name, Material material, List<String> lore, int slot) {
+
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+
+        lore.replaceAll(s -> ChatColor.translateAlternateColorCodes('&', s));
+
+        meta.setDisplayName(Toolkit.translate(name));
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        menu.setItem(slot, item);
+
+    }
+
+    public void addItem(String name, Material material, List<String> lore, int amount, int slot) {
+
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+
+        lore.replaceAll(s -> ChatColor.translateAlternateColorCodes('&', s));
+
+        meta.setDisplayName(Toolkit.translate(name));
+        meta.setLore(lore);
+        item.setAmount(amount > 0 ? amount : 1);
+        item.setItemMeta(meta);
+
+        menu.setItem(slot, item);
+
+    }
+
+    public void setItem(ItemStack item, int slot) {
+
+        menu.setItem(slot, item);
+
+    }
+
+    public void openMenu(Player p) {
+
+        p.openInventory(menu);
+
+    }
+
+    public void closeMenu(Player p) {
+
+        p.closeInventory();
+
+    }
+
+    public ItemStack getSlot(int slot) {
+        return menu.getItem(slot);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public InventoryHolder getOwner() {
+        return owner;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
 }

@@ -30,12 +30,12 @@ public class WorldGuardAPI {
         return instance;
     }
 
-    public boolean allows(Player player, StateFlag...flags) {
+    public boolean allows(Player player, StateFlag... flags) {
         Location location = player.getLocation();
         return version == -1 || version == 6 ? allowsWg6(player, location, flags) : allowsWg7(player, location, flags);
     }
 
-    private boolean allowsWg6(Player player, Location location, StateFlag...flags) {
+    private boolean allowsWg6(Player player, Location location, StateFlag... flags) {
 
         LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
 
@@ -58,7 +58,7 @@ public class WorldGuardAPI {
 
     }
 
-    private boolean allowsWg7(Player player, Location location, StateFlag...flags) {
+    private boolean allowsWg7(Player player, Location location, StateFlag... flags) {
 
         com.sk89q.worldguard.protection.regions.RegionContainer container = com.sk89q.worldguard.WorldGuard.getInstance().getPlatform().getRegionContainer();
         com.sk89q.worldguard.protection.regions.RegionQuery query = container.createQuery();

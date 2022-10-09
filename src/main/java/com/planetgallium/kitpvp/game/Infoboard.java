@@ -1,8 +1,6 @@
 package com.planetgallium.kitpvp.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.base.Preconditions;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -11,10 +9,11 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import com.google.common.base.Preconditions;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Infoboard {
-	
+
     private List<ScoreboardText> list;
     private Scoreboard scoreBoard;
     private Objective objective;
@@ -22,7 +21,7 @@ public class Infoboard {
     private int lastSentCount;
 
     public Infoboard(final Scoreboard scoreboard2, final String title) {
-    	
+
         this.list = new ArrayList<ScoreboardText>();
         this.tag = "PlaceHolder";
         this.lastSentCount = -1;
@@ -30,18 +29,17 @@ public class Infoboard {
         this.tag = ChatColor.translateAlternateColorCodes('&', title);
         this.scoreBoard = scoreboard2;
         (this.objective = this.getOrCreateObjective(this.tag)).setDisplaySlot(DisplaySlot.SIDEBAR);
-        
+
     }
 
     public void add(String input) {
-    	
+
         input = ChatColor.translateAlternateColorCodes('&', input);
-        
+
         ScoreboardText text = null;
         if (input.length() <= 16) {
             text = new ScoreboardText(input, "");
-        }
-        else {
+        } else {
             String first = input.substring(0, 16);
             String second = input.substring(16, input.length());
             if (first.endsWith(String.valueOf('§'))) {
@@ -105,8 +103,7 @@ public class Infoboard {
         return String.valueOf(String.valueOf(ChatColor.values()[index].toString())) + ChatColor.RESET;
     }
 
-    private static class ScoreboardText
-    {
+    private static class ScoreboardText {
         private String left;
         private String right;
 
@@ -123,15 +120,15 @@ public class Infoboard {
             return this.right;
         }
     }
-    
+
     /**
      * Added for testing purposes, not part of original class
      */
-    
+
     public void hide() {
-    	
-    	objective.setDisplaySlot(null);
-    	
+
+        objective.setDisplaySlot(null);
+
     }
-    
+
 }

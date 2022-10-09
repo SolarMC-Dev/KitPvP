@@ -4,18 +4,18 @@ main: com.planetgallium.kitpvp.Game
 version: 2.2.0
 description: The ultimate all-in-one KitPvP plugin.
 website: https://www.spigotmc.org/resources/27107/
-softdepend: [PlaceholderAPI, WorldGuard]
+softdepend: [ PlaceholderAPI, WorldGuard, hCore ]
 api-version: 1.13
 
 commands:
-   kitpvp:
-     description: Main command.
-     aliases: [kp, kit-pvp]
-   ckit:
-     description: Select a kit.
-   cspawn:
-     description: Teleports you to the spawn.
-   ckits:
-     description: View all available kits.
-   cstats:
-     description: View your stats.
+  kitpvp:
+    description: Main command.
+    aliases: [ kp, kit-pvp ]
+  ckit:
+    description: Select a kit.
+  cspawn:
+    description: Teleports you to the spawn.
+  ckits:
+    description: View all available kits.
+  cstats:
+    description: View your stats.
