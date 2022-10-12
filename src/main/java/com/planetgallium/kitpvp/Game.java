@@ -37,6 +37,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class Game extends JavaPlugin implements Listener {
@@ -116,7 +117,7 @@ public class Game extends JavaPlugin implements Listener {
                 .every(1, TimeUnit.SECONDS)
                 .run(() -> {
                     for (HitListener.AssistCache assistCache : arena.getAssistCaches().values()) {
-                        assistCache.getAttackers().forEach((attacker, value) -> {
+                        new HashMap<>(assistCache.getAttackers()).forEach((attacker, value) -> {
                             if (System.currentTimeMillis() >= value)
                                 assistCache.getAttackers().remove(attacker);
                         });
