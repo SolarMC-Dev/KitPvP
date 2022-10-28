@@ -18,11 +18,13 @@ public class HitListener implements Listener {
 
     private final Arena arena;
     private final Resource config;
+    private final Game plugin;
     private final XSound.Record hitSound;
 
     public HitListener(Game plugin) {
         this.arena = plugin.getArena();
         this.config = plugin.getResources().getConfig();
+        this.plugin = plugin;
 
         String soundString = config.getString("Combat.HitSound.Sound") + ", 1, " + config.getInt("Combat.HitSound.Pitch");
         this.hitSound = XSound.parse(soundString);
@@ -42,7 +44,7 @@ public class HitListener implements Listener {
 
                 AssistCache assistCache = arena.getAssistCaches().get(damagedPlayer.getUniqueId());
                 if (assistCache == null) {
-                    assistCache = new AssistCache(damagedPlayer.getUniqueId());
+                    assistCache = new AssistCache(plugin, damagedPlayer.getUniqueId());
                     arena.getAssistCaches().put(damagedPlayer.getUniqueId(), assistCache);
                 }
                 assistCache.addAttacker(damager.getUniqueId());
@@ -56,14 +58,16 @@ public class HitListener implements Listener {
     }
 
 
-    public class AssistCache {
+    public static class AssistCache {
 
         private final UUID victim;
         private final Map<UUID, Long> attackers;
+        private final Resource config;
 
-        public AssistCache(UUID victim) {
+        public AssistCache(Game game, UUID victim) {
             this.victim = victim;
             this.attackers = new HashMap<>();
+            this.config = game.getResources().getConfig();
         }
 
         public UUID getVictim() {

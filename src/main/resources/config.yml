@@ -66,6 +66,7 @@ Death:
     Time: 15
     Reward: 75
     Max-Assisters: 5
+    Message: 'you won an award for getting assists'
 Respawn:
   Commands: [ ]
 PlayerTracker:

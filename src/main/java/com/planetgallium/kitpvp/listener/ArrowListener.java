@@ -2,6 +2,7 @@ package com.planetgallium.kitpvp.listener;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.planetgallium.kitpvp.Game;
+import com.planetgallium.kitpvp.game.Arena;
 import com.planetgallium.kitpvp.util.Resource;
 import com.planetgallium.kitpvp.util.Toolkit;
 import org.bukkit.Material;
@@ -16,9 +17,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class ArrowListener implements Listener {
 
     private Resource config;
+    private final Game plugin;
+    private Arena arena;
 
     public ArrowListener(Game plugin) {
+        this.arena = plugin.getArena();
         this.config = plugin.getResources().getConfig();
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -55,6 +60,13 @@ public class ArrowListener implements Listener {
                                     }
 
                                 }
+
+                                HitListener.AssistCache assistCache = arena.getAssistCaches().get(damagedPlayer.getUniqueId());
+                                if (assistCache == null) {
+                                    assistCache = new HitListener.AssistCache(plugin, damagedPlayer.getUniqueId());
+                                    arena.getAssistCaches().put(damagedPlayer.getUniqueId(), assistCache);
+                                }
+                                assistCache.addAttacker(shooter.getUniqueId());
 
                             }
 

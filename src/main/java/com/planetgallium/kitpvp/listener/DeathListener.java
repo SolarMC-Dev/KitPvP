@@ -62,6 +62,8 @@ public class DeathListener implements Listener {
             setDeathMessage(victim);
             respawnPlayer(victim);
 
+
+            //assist rewards
             int reward = config.getInt("Death.Assist.Reward");
             for (Map.Entry<UUID, Long> entry : arena.getAssistCaches().get(victim.getUniqueId()).getAttackers().entrySet()) {
                 Player attacker = Bukkit.getPlayer(entry.getKey());
@@ -72,6 +74,7 @@ public class DeathListener implements Listener {
                     continue;
 
                 VaultHook.ECONOMY.depositPlayer(attacker, reward);
+                attacker.sendMessage(resources.getConfig().getString("Death.Assist.Message"));
             }
 
             arena.getAssistCaches().remove(victim.getUniqueId());
