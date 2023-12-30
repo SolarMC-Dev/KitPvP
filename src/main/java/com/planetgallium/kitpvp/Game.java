@@ -90,7 +90,6 @@ public class Game extends JavaPlugin implements Listener {
 		populateUUIDCacheForOnlinePlayers();
 
 		Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &aDone!");
-		
 	}
 
 	private void populateUUIDCacheForOnlinePlayers() {

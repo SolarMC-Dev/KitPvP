@@ -2,11 +2,11 @@ package com.planetgallium.kitpvp.util;
 
 import com.planetgallium.database.TopEntry;
 import com.planetgallium.kitpvp.Game;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import com.planetgallium.kitpvp.game.Arena;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.flywaydb.core.internal.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

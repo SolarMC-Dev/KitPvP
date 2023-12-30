@@ -37,7 +37,11 @@
                     <relocations>
                         <relocation>
                             <pattern>com.cryptomorin.xseries</pattern>
-                            <shadedPattern>com.planetgallium.kitpvp</shadedPattern>
+                            <shadedPattern>com.planetgallium.kitpvp.xseries</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.hakan.core</pattern>
+                            <shadedPattern>com.planetgallium.kitpvp.hcore</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
@@ -67,7 +71,6 @@
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <shadedArtifactAttached>false</shadedArtifactAttached>
-                            <outputFile>/Users/nico/Developer/Spigot/Latest/plugins/${project.artifactId}.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -97,7 +100,7 @@
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.0</version>
+            <version>7.0.9</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -136,9 +139,19 @@
             <version>3.36.0.3</version>
             <scope>provided</scope> <!-- already shaded in Spigot jar -->
         </dependency>
+        <dependency>
+            <groupId>com.github.hakan-krgn.hCore</groupId>
+            <artifactId>hCore-bukkit</artifactId>
+            <version>0.7.3.3</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
