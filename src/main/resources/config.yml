@@ -63,6 +63,10 @@ Death:
     Suicide: '%prefix% &b%victim% &7killed themselves.'
     Unknown: '%prefix% &b%victim% &7died.'
     Enabled: true
+  Assist:
+    Time: 15
+    Reward: 75
+    Max-Assisters: 5
 Respawn:
   Commands: []
 PlayerTracker:

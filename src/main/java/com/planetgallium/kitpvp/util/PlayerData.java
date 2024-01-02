@@ -8,12 +8,13 @@ public class PlayerData {
     private final Map<String, Integer> data;
     private final Map<String, Long> kitCooldowns;
 
-    public PlayerData(int kills, int deaths, int experience, int level) {
+    public PlayerData(int kills, int deaths, int experience, int level, int assists) {
         this.data = new HashMap<>();
         this.kitCooldowns = new HashMap<>();
 
         data.put("kills", kills);
         data.put("deaths", deaths);
+        data.put("assists", assists);
         data.put("experience", experience);
         data.put("level", level);
     }

@@ -1,5 +1,6 @@
 package com.planetgallium.kitpvp;
 
+import com.hakan.core.HCore;
 import com.planetgallium.kitpvp.game.Infobase;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,6 +20,8 @@ import com.planetgallium.kitpvp.game.Arena;
 import com.planetgallium.kitpvp.listener.*;
 import com.planetgallium.kitpvp.util.*;
 
+import java.util.concurrent.TimeUnit;
+
 public class Game extends JavaPlugin implements Listener {
 	
 	private static Game instance;
@@ -35,9 +38,9 @@ public class Game extends JavaPlugin implements Listener {
 	
 	@Override
 	public void onEnable() {
-
 		Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &7Enabling &bKitPvP &7version &b" + this.getDescription().getVersion() + "&7...");
 
+		HCore.initialize(this);
 		instance = this;
 		resources = new Resources(this);
 		prefix = resources.getMessages().fetchString("Messages.General.Prefix");
@@ -68,13 +71,8 @@ public class Game extends JavaPlugin implements Listener {
 	    getCommand("kitpvp").setExecutor(new MainCommand(this));
 		
 		new Metrics(this);
-		
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				checkUpdate();
-			}
-		}.runTaskAsynchronously(this);
+
+		Bukkit.getScheduler().runTaskAsynchronously(this, this::checkUpdate);
 		
 		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
 			Bukkit.getConsoleSender().sendMessage(Toolkit.translate("[&b&lKIT-PVP&7] &7Hooking into &bPlaceholderAPI&7..."));
@@ -88,6 +86,15 @@ public class Game extends JavaPlugin implements Listener {
 		}
 
 		populateUUIDCacheForOnlinePlayers();
+
+		HCore.asyncScheduler()
+				.after(1, TimeUnit.SECONDS)
+				.every(1, TimeUnit.SECONDS)
+				.run(() -> {
+					for (AssistCache assistCache : AssistCache.assistCache.values()) {
+						assistCache.getAttackers().entrySet().removeIf((entry) -> System.currentTimeMillis() >= entry.getValue());
+					}
+				});
 
 		Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &aDone!");
 	}

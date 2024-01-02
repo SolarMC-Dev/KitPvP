@@ -51,6 +51,8 @@ Messages:
     InvalidNumber: '%prefix% &cInvalid number "%number%".'
     OverflowItemsLost: '%prefix% &c%number% items could not fit in your inventory and were lost.'
     InvalidKitName: '%prefix% &cFailed to create kit due to invalid kit name (contains +, -)'
+  Death:
+    Assist: '%prefix% &7You have won &b%reward% &7for assisting in killing of &b%victim%.'
   Stats:
     Message:
     - '&7&m                                &r'

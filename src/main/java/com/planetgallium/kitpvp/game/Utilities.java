@@ -81,6 +81,10 @@ public class Utilities {
             s = s.replace("%deaths%", String.valueOf(arena.getStats().getStat("deaths", username)));
         }
 
+        if (s.contains("%assists%")) {
+            s = s.replace("%assists%", String.valueOf(arena.getStats().getStat("assists", username)));
+        }
+
         if (s.contains("%kit%")) {
             if (arena.getKits().getKitOfPlayer(username) != null) {
                 s = s.replace("%kit%", arena.getKits().getKitOfPlayer(username).getName());

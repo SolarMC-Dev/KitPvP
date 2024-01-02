@@ -23,6 +23,7 @@ public class Placeholders extends PlaceholderExpansion {
 
 		placeholderAPItoBuiltIn.put("stats_kills", "%kills%");
 		placeholderAPItoBuiltIn.put("stats_deaths", "%deaths%");
+		placeholderAPItoBuiltIn.put("stats_assists", "%assists%");
 		placeholderAPItoBuiltIn.put("stats_kd", "%kd%");
 		placeholderAPItoBuiltIn.put("stats_experience", "%xp%");
 		placeholderAPItoBuiltIn.put("stats_level", "%level%");

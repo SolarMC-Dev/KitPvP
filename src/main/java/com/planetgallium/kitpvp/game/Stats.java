@@ -137,7 +137,7 @@ public class Stats {
 
     public PlayerData getOrCreateStatsCache(String username) {
         if (!isPlayerRegistered(username)) {
-            return new PlayerData(-1, -1, -1, -1);
+            return new PlayerData(-1, -1, -1, -1, -1);
         }
 
         if (!CacheManager.getStatsCache().containsKey(username)) {

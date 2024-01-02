@@ -260,7 +260,7 @@ public class Infobase {
     }
 
     public PlayerData recordToPlayerData(Record playerRecord) {
-        PlayerData playerData = new PlayerData(-1, -1, -1, -1);
+        PlayerData playerData = new PlayerData(-1, -1, -1, -1, -1);
         for (String statIdentifier : playerData.getData().keySet()) {
             playerData.setData(statIdentifier, (int) playerRecord.getFieldValue(statIdentifier));
         }
@@ -268,7 +268,7 @@ public class Infobase {
     }
 
     public PlayerData getStatsData(String username) {
-        PlayerData playerData = new PlayerData(-1, -1, -1, -1);
+        PlayerData playerData = new PlayerData(-1, -1, -1, -1, -1);
         if (verifyTableExists("stats")) {
             Table statsTable = database.getTable("stats");
 

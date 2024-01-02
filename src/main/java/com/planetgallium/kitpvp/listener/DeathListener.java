@@ -3,11 +3,7 @@ package com.planetgallium.kitpvp.listener;
 import com.cryptomorin.xseries.XSound;
 import com.cryptomorin.xseries.messages.Titles;
 import com.planetgallium.kitpvp.util.*;
-import org.bukkit.Effect;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,6 +20,8 @@ import com.planetgallium.kitpvp.Game;
 import com.planetgallium.kitpvp.game.Arena;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class DeathListener implements Listener {
 
@@ -54,6 +52,27 @@ public class DeathListener implements Listener {
 
 			respawnPlayer(victim);
 			setDeathMessage(victim);
+
+
+			int reward = config.getInt("Death.Assist.Reward");
+			for (Map.Entry<Player, Long> entry : AssistCache.assistCache.get(victim).getAttackers().entrySet()) {
+				Player attacker = entry.getKey();
+
+				if (attacker == null)
+					continue;
+				else if (attacker.equals(e.getEntity().getKiller()))
+					continue;
+
+				VaultHook.ECONOMY.depositPlayer(attacker, reward);
+				attacker.sendMessage(resources.getMessages().fetchString("Death.Assist.Message")
+						.replace("%reward%", String.valueOf(reward))
+						.replace("%victim%", victim.getName()));
+			}
+
+			for (Player assister : AssistCache.assistCache.get(victim).getAttackers().keySet()) {
+				arena.getStats().addToStat("assists", assister.getName(), 1);
+			}
+			AssistCache.assistCache.remove(victim);
 
 			arena.getStats().addToStat("deaths", victim.getName(), 1);
 			arena.getStats().removeExperience(victim.getName(),

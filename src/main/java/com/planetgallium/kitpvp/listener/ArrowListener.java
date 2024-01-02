@@ -1,6 +1,7 @@
 package com.planetgallium.kitpvp.listener;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.planetgallium.kitpvp.util.AssistCache;
 import com.planetgallium.kitpvp.util.Resource;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -36,6 +37,13 @@ public class ArrowListener implements Listener {
 
 				// make sure damaged player isn't shooter (self-hit)
 				if (!damagedPlayer.getName().equals(shooter.getName())) {
+					AssistCache assistCache = AssistCache.assistCache.get(damagedPlayer);
+					if (assistCache == null) {
+						assistCache = new AssistCache(plugin);
+						AssistCache.assistCache.put(damagedPlayer, assistCache);
+					}
+					assistCache.addAttacker(shooter);
+
 					doArrowHitMessageIfEnabled(shooter, damagedPlayer);
 					doArrowReturnIfEnabled(shooter, damagedPlayer);
 				}

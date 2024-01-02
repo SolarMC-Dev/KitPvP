@@ -3,6 +3,7 @@ package com.planetgallium.kitpvp.listener;
 import com.cryptomorin.xseries.XSound;
 import com.planetgallium.kitpvp.Game;
 import com.planetgallium.kitpvp.game.Arena;
+import com.planetgallium.kitpvp.util.AssistCache;
 import com.planetgallium.kitpvp.util.Resource;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,11 +13,13 @@ import com.planetgallium.kitpvp.util.Toolkit;
 
 public class HitListener implements Listener {
 
+	private final Game plugin;
 	private final Arena arena;
 	private final Resource config;
 	private final XSound.Record hitSound;
 
 	public HitListener(Game plugin) {
+		this.plugin = plugin;
 		this.arena = plugin.getArena();
 		this.config = plugin.getResources().getConfig();
 
@@ -35,6 +38,13 @@ public class HitListener implements Listener {
 			if (Toolkit.inArena(damagedPlayer)) {
 
 				arena.getHitCache().put(damagedPlayer.getName(), damager.getName());
+
+				AssistCache assistCache = AssistCache.assistCache.get(damagedPlayer);
+				if (assistCache == null) {
+					assistCache = new AssistCache(plugin);
+					AssistCache.assistCache.put(damagedPlayer, assistCache);
+				}
+				assistCache.addAttacker(damager);
 
 				if (config.getBoolean("Combat.HitSound.Enabled")) {
 					hitSound.forPlayer(damagedPlayer).play();
