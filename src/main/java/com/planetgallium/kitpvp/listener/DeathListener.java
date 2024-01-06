@@ -53,41 +53,44 @@ public class DeathListener implements Listener {
 			respawnPlayer(victim);
 			setDeathMessage(victim);
 
+			AssistCache cache = AssistCache.assistCache.get(victim);
+			if (cache != null) {
 
-			int reward = config.getInt("Death.Assist.Reward");
-			for (Map.Entry<Player, Long> entry : AssistCache.assistCache.get(victim).getAttackers().entrySet()) {
-				Player attacker = entry.getKey();
+				int reward = config.getInt("Death.Assist.Reward");
+				for (Map.Entry<Player, Long> entry : cache.getAttackers().entrySet()) {
+					Player attacker = entry.getKey();
 
-				if (attacker == null)
-					continue;
-				else if (attacker.equals(e.getEntity().getKiller()))
-					continue;
+					if (attacker == null)
+						continue;
+					else if (attacker.equals(e.getEntity().getKiller()))
+						continue;
 
-				VaultHook.ECONOMY.depositPlayer(attacker, reward);
-				attacker.sendMessage(resources.getMessages().fetchString("Death.Assist.Message")
-						.replace("%reward%", String.valueOf(reward))
-						.replace("%victim%", victim.getName()));
+					VaultHook.ECONOMY.depositPlayer(attacker, reward);
+					attacker.sendMessage(resources.getMessages().fetchString("Death.Assist.Message")
+							.replace("%reward%", String.valueOf(reward))
+							.replace("%victim%", victim.getName()));
+
+					for (Player assister : AssistCache.assistCache.get(victim).getAttackers().keySet()) {
+						arena.getStats().addToStat("assists", assister.getName(), 1);
+					}
+					AssistCache.assistCache.remove(victim);
+				}
+
+				arena.getStats().addToStat("deaths", victim.getName(), 1);
+				arena.getStats().removeExperience(victim.getName(),
+						resources.getLevels().getInt("Levels.Options.Experience-Taken-On-Death"));
+
+				if (config.getBoolean("Arena.DeathParticle")) {
+					victim.getWorld().playEffect(victim.getLocation().add(0.0D, 1.0D, 0.0D), Effect.STEP_SOUND, 152);
+				}
+
+				Toolkit.runCommands(victim, config.getStringList("Death.Commands"), "%victim%", victim.getName());
+
+				broadcast(victim.getWorld(),
+						XSound.matchXSound(config.fetchString("Death.Sound.Sound")).get().parseSound(),
+						1,
+						config.getInt("Death.Sound.Pitch"));
 			}
-
-			for (Player assister : AssistCache.assistCache.get(victim).getAttackers().keySet()) {
-				arena.getStats().addToStat("assists", assister.getName(), 1);
-			}
-			AssistCache.assistCache.remove(victim);
-
-			arena.getStats().addToStat("deaths", victim.getName(), 1);
-			arena.getStats().removeExperience(victim.getName(),
-					resources.getLevels().getInt("Levels.Options.Experience-Taken-On-Death"));
-
-			if (config.getBoolean("Arena.DeathParticle")) {
-				victim.getWorld().playEffect(victim.getLocation().add(0.0D, 1.0D, 0.0D), Effect.STEP_SOUND, 152);
-			}
-
-			Toolkit.runCommands(victim, config.getStringList("Death.Commands"), "%victim%", victim.getName());
-
-			broadcast(victim.getWorld(),
-					XSound.matchXSound(config.fetchString("Death.Sound.Sound")).get().parseSound(),
-					1,
-					config.getInt("Death.Sound.Pitch"));
 		}
 
 	}
