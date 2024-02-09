@@ -70,7 +70,7 @@ public class DeathListener implements Listener {
 							.replace("%reward%", String.valueOf(reward))
 							.replace("%victim%", victim.getName()));
 
-					for (Player assister : AssistCache.assistCache.get(victim).getAttackers().keySet()) {
+					for (Player assister : cache.getAttackers().keySet()) {
 						arena.getStats().addToStat("assists", assister.getName(), 1);
 					}
 					AssistCache.assistCache.remove(victim);

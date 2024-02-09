@@ -40,9 +40,9 @@ public class ArrowListener implements Listener {
 					AssistCache assistCache = AssistCache.assistCache.get(damagedPlayer);
 					if (assistCache == null) {
 						assistCache = new AssistCache(plugin);
-						AssistCache.assistCache.put(damagedPlayer, assistCache);
 					}
 					assistCache.addAttacker(shooter);
+					AssistCache.assistCache.put(damagedPlayer, assistCache);
 
 					doArrowHitMessageIfEnabled(shooter, damagedPlayer);
 					doArrowReturnIfEnabled(shooter, damagedPlayer);

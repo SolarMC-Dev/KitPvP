@@ -35,7 +35,8 @@ public class Infobase {
                 new Field("kills", DataType.INTEGER),
                 new Field("deaths", DataType.INTEGER),
                 new Field("experience", DataType.INTEGER),
-                new Field("level", DataType.INTEGER)));
+                new Field("level", DataType.INTEGER),
+                new Field("assists", DataType.INTEGER)));
 
         // Kit Cooldowns
         for (String kitName : resources.getPluginDirectoryFiles("kits", false)) {
@@ -262,7 +263,9 @@ public class Infobase {
     public PlayerData recordToPlayerData(Record playerRecord) {
         PlayerData playerData = new PlayerData(-1, -1, -1, -1, -1);
         for (String statIdentifier : playerData.getData().keySet()) {
-            playerData.setData(statIdentifier, (int) playerRecord.getFieldValue(statIdentifier));
+            Object o = playerRecord.getFieldValue(statIdentifier);
+            if (o == null) continue;
+            playerData.setData(statIdentifier, (int) o  );
         }
         return playerData;
     }

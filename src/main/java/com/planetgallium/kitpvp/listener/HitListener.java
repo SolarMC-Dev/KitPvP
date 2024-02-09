@@ -42,9 +42,9 @@ public class HitListener implements Listener {
 				AssistCache assistCache = AssistCache.assistCache.get(damagedPlayer);
 				if (assistCache == null) {
 					assistCache = new AssistCache(plugin);
-					AssistCache.assistCache.put(damagedPlayer, assistCache);
 				}
 				assistCache.addAttacker(damager);
+				AssistCache.assistCache.put(damagedPlayer, assistCache);
 
 				if (config.getBoolean("Combat.HitSound.Enabled")) {
 					hitSound.forPlayer(damagedPlayer).play();
