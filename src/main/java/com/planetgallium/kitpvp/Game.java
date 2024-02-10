@@ -162,10 +162,9 @@ public class Game extends JavaPlugin implements Listener {
 
 	@Override
 	public void onDisable() {
-		// for players that haven't died and had their stats pushed
-//		for (String username : CacheManager.getStatsCache().keySet()) {
-//			arena.getStats().pushCachedStatsToDatabase(username);
-//		}
+		for (Player player : this.getServer().getOnlinePlayers()) {
+			arena.removePlayer(player);
+		}
 	}
 
 	public boolean hasPlaceholderAPI() { return hasPlaceholderAPI; }

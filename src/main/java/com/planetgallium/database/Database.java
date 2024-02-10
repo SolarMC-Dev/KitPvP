@@ -46,7 +46,7 @@ public class Database {
         } catch (SQLException exception) {
             exception.printStackTrace();
             System.out.println("[Database] Connection to MySQL database failed. Using SQLite instead...");
-            setupSQLite("storage.db");
+            setupSQLite("plugins/KitPvP/storage.db");
         }
     }
 
