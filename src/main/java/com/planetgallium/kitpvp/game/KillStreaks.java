@@ -36,7 +36,6 @@ public class KillStreaks implements Listener {
 				runStreakCase("KillStreaks", damager);
 				runStreakCase("EndStreaks", damagedPlayer);
 				kills.put(damagedPlayer.getName(), 0);
-				
 			} else {
 				kills.put(damagedPlayer.getName(), 0);
 				runStreakCase("EndStreaks", damagedPlayer);

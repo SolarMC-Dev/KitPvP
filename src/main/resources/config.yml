@@ -131,6 +131,7 @@ Arena:
   AbilitiesRequireKit: true
   AddOverflowItemsOnKit: true
   DropRemainingOverflowItemsOnKit: true
+  KillSound: LAVA_POP
 Other:
   AutomaticallyAddKitToMenu: true
 Spawn:

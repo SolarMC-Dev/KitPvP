@@ -271,8 +271,16 @@ public class DeathListener implements Listener {
 		if (victim == null || killer == null) return;
 		if (victim.getName().equals(killer.getName())) return;
 
+		int victimStreak = arena.getStats().getStat("killstreak", victim.getName());
+		if (victimStreak >= 25) {
+			victim.getWorld().strikeLightningEffect(victim.getLocation());
+		}
+
 		arena.getStats().addToStat("kills", killer.getName(), 1);
 		arena.getStats().addToStat("killstreak", killer.getName(), 1);
+		killer.addPotionEffect(PotionEffectType.REGENERATION.createEffect(100, 4));
+		plugin.getServer().getScheduler().runTaskLater(plugin, () -> killer.getWorld().playSound(killer.getLocation(), Sound.valueOf(config.getString("Arena.KillSound")), 1, 1)
+		, 5);
 		arena.getStats().addExperience(killer, resources.getLevels().getInt("Levels.Options.Experience-Given-On-Kill"));
 
 		List<String> killCommands = config.getStringList("Kill.Commands");

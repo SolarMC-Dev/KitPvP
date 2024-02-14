@@ -66,6 +66,8 @@ public class Infobase {
 
     public boolean isPlayerRegistered(String username) {
         String uuid = usernameToUUID(username);
+        if (uuid == null) return false;
+
         return tableContainsUUID("stats", uuid);
     }
 
@@ -155,6 +157,7 @@ public class Infobase {
                 return uuid;
             }
         }
+
         return null;
     }
 

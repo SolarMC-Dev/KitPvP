@@ -93,7 +93,7 @@ public class MainCommand implements CommandExecutor {
 
         } else if (args.length == 4) {
 
-            if (args[0].equalsIgnoreCase("setstats") && hasPermission(sender, "kp.command.setstats")) {
+            if ((args[0].equalsIgnoreCase("setstat") || args[0].equalsIgnoreCase("setstats")) && hasPermission(sender, "kp.command.setstats")) {
                 executeSetStatsCommand(sender, args);
                 return true;
             }
@@ -315,7 +315,9 @@ public class MainCommand implements CommandExecutor {
         if (statsIdentifier.equalsIgnoreCase("kills") ||
                 statsIdentifier.equalsIgnoreCase("deaths") ||
                 statsIdentifier.equalsIgnoreCase("level") ||
-                statsIdentifier.equalsIgnoreCase("experience")) {
+                statsIdentifier.equalsIgnoreCase("experience") ||
+                statsIdentifier.equalsIgnoreCase("assists") ||
+                statsIdentifier.equalsIgnoreCase("killstreak"))  {
 
             if (!isNumeric(possibleAmount)) {
                 sender.sendMessage(resources.getMessages().fetchString("Messages.Error.InvalidNumber")
@@ -340,7 +342,7 @@ public class MainCommand implements CommandExecutor {
         } else {
             sender.sendMessage(resources.getMessages().fetchString("Messages.Error.InvalidType")
                     .replace("%type%", statsIdentifier)
-                    .replace("%types%", "kills, deaths, level, experience"));
+                    .replace("%types%", "kills, deaths, level, experience, assists, killstreak"));
         }
     }
 
