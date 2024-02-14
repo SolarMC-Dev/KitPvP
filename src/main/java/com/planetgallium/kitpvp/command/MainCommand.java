@@ -303,6 +303,10 @@ public class MainCommand implements CommandExecutor {
         }
     }
 
+    public static boolean isNumeric(String str) {
+        return str != null && str.matches("\\d*");
+    }
+
     private void executeSetStatsCommand(CommandSender sender, String[] args) {
         String playerName = args[1];
         String statsIdentifier = args[2];
@@ -313,7 +317,7 @@ public class MainCommand implements CommandExecutor {
                 statsIdentifier.equalsIgnoreCase("level") ||
                 statsIdentifier.equalsIgnoreCase("experience")) {
 
-            if (!StringUtils.isNumeric(possibleAmount)) {
+            if (!isNumeric(possibleAmount)) {
                 sender.sendMessage(resources.getMessages().fetchString("Messages.Error.InvalidNumber")
                         .replace("%number%", possibleAmount));
             }

@@ -1,11 +1,13 @@
 name: KitPvP
 author: Cervinakuy
 main: com.planetgallium.kitpvp.Game
-version: 2.2.1
+version: ${project.version}
 description: The ultimate all-in-one KitPvP plugin.
 website: https://www.spigotmc.org/resources/27107/
 softdepend: [PlaceholderAPI, WorldGuard]
 api-version: 1.13
+
+depend: [hCore]
 
 commands:
    kitpvp:

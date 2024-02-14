@@ -24,6 +24,7 @@ public class LeaveListener implements Listener {
 	public void onLeave(PlayerQuitEvent e) {
 		Player p = e.getPlayer();
 		if (Toolkit.inArena(p)) {
+			arena.getStats().pushCachedStatsToDatabase(p.getName(), true);
 			arena.deletePlayer(p);
 		}
 	}

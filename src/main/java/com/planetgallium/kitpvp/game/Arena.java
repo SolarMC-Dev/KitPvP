@@ -58,7 +58,6 @@ public class Arena {
 		kits.resetKit(p.getName());
 
 		if (config.getBoolean("Arena.ResetKillStreakOnLeave")) {
-
 			killstreaks.setStreak(p, 0);
 		}
 		

@@ -2,6 +2,7 @@ package com.planetgallium.kitpvp.util;
 
 import com.planetgallium.database.TopEntry;
 import com.planetgallium.kitpvp.Game;
+import com.planetgallium.kitpvp.command.MainCommand;
 import org.bukkit.entity.Player;
 import com.planetgallium.kitpvp.game.Arena;
 
@@ -24,6 +25,7 @@ public class Placeholders extends PlaceholderExpansion {
 		placeholderAPItoBuiltIn.put("stats_kills", "%kills%");
 		placeholderAPItoBuiltIn.put("stats_deaths", "%deaths%");
 		placeholderAPItoBuiltIn.put("stats_assists", "%assists%");
+		placeholderAPItoBuiltIn.put("stats_killstreak", "%killstreak%");
 		placeholderAPItoBuiltIn.put("stats_kd", "%kd%");
 		placeholderAPItoBuiltIn.put("stats_experience", "%xp%");
 		placeholderAPItoBuiltIn.put("stats_level", "%level%");
@@ -52,7 +54,7 @@ public class Placeholders extends PlaceholderExpansion {
 		String possibleTopValue = queries[3]; // 1, 15
 		int topValue = 1; // if number parsing fails, use top player
 
-		if (StringUtils.isNumeric(possibleTopValue)) {
+		if (MainCommand.isNumeric(possibleTopValue)) {
 			topValue = Integer.parseInt(possibleTopValue);
 		} else {
 			Toolkit.printToConsole("%prefix% &cFailed to properly parse placeholder, " +

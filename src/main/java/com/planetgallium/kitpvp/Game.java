@@ -2,6 +2,7 @@ package com.planetgallium.kitpvp;
 
 import com.hakan.core.HCore;
 import com.planetgallium.kitpvp.game.Infobase;
+import com.planetgallium.kitpvp.game.Stats;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,7 +11,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -40,7 +40,7 @@ public class Game extends JavaPlugin implements Listener {
 	public void onEnable() {
 		Toolkit.printToConsole("&7[&b&lKIT-PVP&7] &7Enabling &bKitPvP &7version &b" + this.getDescription().getVersion() + "&7...");
 
-		HCore.initialize(this);
+		com.hakan.core.HCore.initialize(this);
 		instance = this;
 		resources = new Resources(this);
 		prefix = resources.getMessages().fetchString("Messages.General.Prefix");
@@ -163,7 +163,16 @@ public class Game extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable() {
 		for (Player player : this.getServer().getOnlinePlayers()) {
-			arena.removePlayer(player);
+			//Stats stats = arena.getStats();
+
+			/*String name = player.getName();
+			Bukkit.broadcastMessage(name + " KILLS: " + stats.getStat("kills", name));
+			Bukkit.broadcastMessage(name + " DEATHS: " + stats.getStat("deaths", name));
+			Bukkit.broadcastMessage(name + " EXPERIENCE: " + stats.getStat("experience", name));
+			Bukkit.broadcastMessage(name + " LEVEL: " + stats.getStat("level", name));*/
+
+			arena.getStats().pushCachedStatsToDatabase(player.getName(), true, false);
+			arena.deletePlayer(player);
 		}
 	}
 

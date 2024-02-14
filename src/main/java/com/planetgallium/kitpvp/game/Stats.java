@@ -99,7 +99,7 @@ public class Stats {
 
     public void addToStat(String identifier, String username, int amount) {
         int updatedAmount = getStat(identifier, username) + amount;
-        setStat(identifier, username, updatedAmount);
+        setStat(identifier  , username, updatedAmount);
     }
 
     public void setStat(String identifier, String username, int data) {
@@ -112,7 +112,11 @@ public class Stats {
     }
 
     public void pushCachedStatsToDatabase(String username, boolean removeFromCacheAfter) {
-        new BukkitRunnable() {
+        pushCachedStatsToDatabase(username, removeFromCacheAfter, false);
+    }
+
+    public void pushCachedStatsToDatabase(String username, boolean removeFromCacheAfter, boolean async) {
+        BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
                 if (!CacheManager.getStatsCache().containsKey(username)) {
@@ -124,8 +128,15 @@ public class Stats {
                     CacheManager.getStatsCache().remove(username);
                 }
             }
-        }.runTaskAsynchronously(plugin);
+        };
+
+        if (async) {
+            runnable.runTaskAsynchronously(plugin);
+        } else {
+            runnable.run();
     }
+
+}
 
     public int getStat(String identifier, String username) {
         if (!isPlayerRegistered(username)) {
@@ -137,7 +148,7 @@ public class Stats {
 
     public PlayerData getOrCreateStatsCache(String username) {
         if (!isPlayerRegistered(username)) {
-            return new PlayerData(-1, -1, -1, -1, -1);
+            return new PlayerData(-1, -1, -1, -1, -1, -1);
         }
 
         if (!CacheManager.getStatsCache().containsKey(username)) {

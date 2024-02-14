@@ -52,6 +52,7 @@ public class DeathListener implements Listener {
 
 			respawnPlayer(victim);
 			setDeathMessage(victim);
+			creditWithKill(victim, victim.getKiller());
 
 			AssistCache cache = AssistCache.assistCache.get(victim);
 			if (cache != null) {
@@ -77,6 +78,7 @@ public class DeathListener implements Listener {
 				}
 
 				arena.getStats().addToStat("deaths", victim.getName(), 1);
+				arena.getStats().setStat("killstreak", victim.getName(), 0);
 				arena.getStats().removeExperience(victim.getName(),
 						resources.getLevels().getInt("Levels.Options.Experience-Taken-On-Death"));
 
@@ -194,7 +196,6 @@ public class DeathListener implements Listener {
 			Player killer = (Player) getShooter(victim.getLastDamageCause());
 
 			broadcast(victim.getWorld(), getDeathMessage(victim, killer, "Shot"));
-			creditWithKill(victim, killer);
 
 //		} else if (cause == DamageCause.ENTITY_ATTACK) {
 //
@@ -206,7 +207,6 @@ public class DeathListener implements Listener {
 			Player killer = victim.getKiller();
 
 			broadcast(victim.getWorld(), getDeathMessage(victim, killer, "Player"));
-			creditWithKill(victim, killer);
 
 		} else if (arena.getHitCache().get(victim.getName()) != null) {
 
@@ -214,7 +214,6 @@ public class DeathListener implements Listener {
 			Player killer = Toolkit.getPlayer(victim.getWorld(), killerName);
 
 			broadcast(victim.getWorld(), getDeathMessage(victim, killer, "Player"));
-			creditWithKill(victim, killer);
 
 		} else if ((cause == DamageCause.BLOCK_EXPLOSION || cause == DamageCause.ENTITY_EXPLOSION) && getExplodedEntity(victim.getLastDamageCause()).getType() == EntityType.PRIMED_TNT) {
 
@@ -222,7 +221,6 @@ public class DeathListener implements Listener {
 			Player killer = Toolkit.getPlayer(victim.getWorld(), bomberName);
 
 			broadcast(victim.getWorld(), getDeathMessage(victim, killer, "Player"));
-			creditWithKill(victim, killer);
 
 		} else if (cause == DamageCause.VOID) {
 
@@ -270,24 +268,24 @@ public class DeathListener implements Listener {
 	}
 
 	private void creditWithKill(Player victim, Player killer) {
-		if (victim != null && killer != null) {
-			if (!victim.getName().equals(killer.getName())) {
-				arena.getStats().addToStat("kills", killer.getName(), 1);
-				arena.getStats().addExperience(killer, resources.getLevels().getInt("Levels.Options.Experience-Given-On-Kill"));
+		if (victim == null || killer == null) return;
+		if (victim.getName().equals(killer.getName())) return;
 
-				List<String> killCommands = config.getStringList("Kill.Commands");
-				killCommands = Toolkit.replaceInList(killCommands, "%victim%", victim.getName());
-				Toolkit.runCommands(killer, killCommands, "%killer%", killer.getName());
+		arena.getStats().addToStat("kills", killer.getName(), 1);
+		arena.getStats().addToStat("killstreak", killer.getName(), 1);
+		arena.getStats().addExperience(killer, resources.getLevels().getInt("Levels.Options.Experience-Given-On-Kill"));
 
-				if (resources.getScoreboard().getBoolean("Scoreboard.General.Enabled")) {
-					new BukkitRunnable() {
-						@Override
-						public void run() {
-							arena.updateScoreboards(killer, false);
-						}
-					}.runTaskLater(plugin, 20L);
+		List<String> killCommands = config.getStringList("Kill.Commands");
+		killCommands = Toolkit.replaceInList(killCommands, "%victim%", victim.getName());
+		Toolkit.runCommands(killer, killCommands, "%killer%", killer.getName());
+
+		if (resources.getScoreboard().getBoolean("Scoreboard.General.Enabled")) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					arena.updateScoreboards(killer, false);
 				}
-			}
+			}.runTaskLater(plugin, 20L);
 		}
 	}
 

@@ -24,8 +24,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
 
@@ -38,10 +38,6 @@
                         <relocation>
                             <pattern>com.cryptomorin.xseries</pattern>
                             <shadedPattern>com.planetgallium.kitpvp.xseries</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>com.hakan.core</pattern>
-                            <shadedPattern>com.planetgallium.kitpvp.hcore</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
@@ -128,6 +124,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>10.7.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.44</version>
@@ -143,7 +146,7 @@
             <groupId>com.github.hakan-krgn.hCore</groupId>
             <artifactId>hCore-bukkit</artifactId>
             <version>0.7.3.3</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
