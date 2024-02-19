@@ -22,8 +22,7 @@ public class ChatListener implements Listener {
 	
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
-		
-		if (resources.getConfig().getBoolean("Chat.Enabled") && Toolkit.inArena(e.getPlayer())) {
+		if (resources.getConfig().getBoolean("Chat.Enabled")) {
 			
 			Player p = e.getPlayer();
 			String levelPrefix = arena.getUtilities().getPlayerLevelPrefix(p.getName());
