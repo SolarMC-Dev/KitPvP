@@ -99,7 +99,7 @@ public class Stats {
 
     public void addToStat(String identifier, String username, int amount) {
         int updatedAmount = getStat(identifier, username) + amount;
-        setStat(identifier  , username, updatedAmount);
+        setStat(identifier, username, updatedAmount);
     }
 
     public void setStat(String identifier, String username, int data) {
@@ -148,7 +148,7 @@ public class Stats {
 
     public PlayerData getOrCreateStatsCache(String username) {
         if (!isPlayerRegistered(username)) {
-            return new PlayerData(-1, -1, -1, -1, -1, -1);
+            return new PlayerData(-1, -1, -1, -1, -1, -1, -1);
         }
 
         if (!CacheManager.getStatsCache().containsKey(username)) {

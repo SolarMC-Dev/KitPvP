@@ -37,6 +37,7 @@ public class Infobase {
                 new Field("experience", DataType.INTEGER),
                 new Field("level", DataType.INTEGER),
                 new Field("killstreak", DataType.INTEGER),
+                new Field("maxkillstreak", DataType.INTEGER),
                 new Field("assists", DataType.INTEGER)));
 
         // Kit Cooldowns
@@ -86,6 +87,7 @@ public class Infobase {
                     new Field("kills", DataType.INTEGER, 0),
                     new Field("deaths", DataType.INTEGER, 0),
                     new Field("killstreak", DataType.INTEGER, 0),
+                    new Field("maxkillstreak", DataType.INTEGER, 0),
                     new Field("experience", DataType.INTEGER, 0),
                     new Field("assists", DataType.INTEGER, 0),
                     new Field("level", DataType.INTEGER,
@@ -123,13 +125,14 @@ public class Infobase {
             Field killsField = new Field("kills", DataType.INTEGER, playerSection.getInt("Kills"));
             Field deathsField = new Field("deaths", DataType.INTEGER, playerSection.getInt("Deaths"));
             Field streakField = new Field("killstreak", DataType.INTEGER, playerSection.getInt("Killstreak"));
+            Field maxStreakField = new Field("maxkillstreak", DataType.INTEGER, playerSection.getInt("MaxKillstreak"));
             Field experienceField =
                     new Field("experience", DataType.INTEGER, playerSection.getInt("Experience"));
             Field levelField = new Field("level", DataType.INTEGER, playerSection.getInt("Level"));
             Field assistsField = new Field("assists", DataType.INTEGER, playerSection.getInt("Assists"));
 
             Record playerStatsRecord = new Record(uuidField, usernameField, killsField, deathsField, experienceField,
-                    levelField, assistsField, streakField);
+                    levelField, assistsField, streakField, maxStreakField);
 
             statsTable.updateOrInsertRecord(playerStatsRecord);
         }
@@ -269,7 +272,7 @@ public class Infobase {
     }
 
     public PlayerData recordToPlayerData(Record playerRecord) {
-        PlayerData playerData = new PlayerData(-1, -1, -1, -1, -1, -1);
+        PlayerData playerData = new PlayerData(-1, -1, -1, -1, -1, -1, -1);
         for (String statIdentifier : playerData.getData().keySet()) {
             Object o = playerRecord.getFieldValue(statIdentifier);
             if (o == null) continue;
@@ -279,7 +282,7 @@ public class Infobase {
     }
 
     public PlayerData getStatsData(String username) {
-        PlayerData playerData = new PlayerData(-1, -1, -1, -1, -1, -1);
+        PlayerData playerData = new PlayerData(-1, -1, -1, -1, -1, -1, -1);
         if (verifyTableExists("stats")) {
             Table statsTable = database.getTable("stats");
 

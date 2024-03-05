@@ -278,6 +278,12 @@ public class DeathListener implements Listener {
 
 		arena.getStats().addToStat("kills", killer.getName(), 1);
 		arena.getStats().addToStat("killstreak", killer.getName(), 1);
+		int maxStreak = arena.getStats().getStat("maxkillstreak", killer.getName());
+		int currentStreak = arena.getStats().getStat("killstreak", killer.getName());
+		if (currentStreak > maxStreak) {
+			arena.getStats().setStat("maxkillstreak", killer.getName(), currentStreak);
+		}
+
 		killer.addPotionEffect(PotionEffectType.REGENERATION.createEffect(100, 4));
 		plugin.getServer().getScheduler().runTaskLater(plugin, () -> killer.getWorld().playSound(killer.getLocation(), Sound.valueOf(config.getString("Arena.KillSound")), 1, 1)
 		, 5);

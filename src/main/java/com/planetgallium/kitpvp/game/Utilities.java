@@ -89,6 +89,10 @@ public class Utilities {
             s = s.replace("%killstreak%", String.valueOf(arena.getStats().getStat("killstreak", username)));
         }
 
+        if (s.contains("%maxkillstreak%")) {
+            s = s.replace("%maxkillstreak%", String.valueOf(arena.getStats().getStat("maxkillstreak", username)));
+        }
+
         if (s.contains("%kit%")) {
             if (arena.getKits().getKitOfPlayer(username) != null) {
                 s = s.replace("%kit%", arena.getKits().getKitOfPlayer(username).getName());
