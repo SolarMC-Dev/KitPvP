@@ -1,6 +1,7 @@
 package com.planetgallium.kitpvp.listener;
 
 import com.planetgallium.kitpvp.util.Toolkit;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,7 +26,7 @@ public class LeaveListener implements Listener {
 		Player p = e.getPlayer();
 		if (Toolkit.inArena(p)) {
 			arena.getStats().pushCachedStatsToDatabase(p.getName(), true);
-			arena.deletePlayer(p);
+			Bukkit.getScheduler().runTask(plugin, () -> arena.deletePlayer(p));
 		}
 	}
 

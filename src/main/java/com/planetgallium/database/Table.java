@@ -92,6 +92,8 @@ public class Table {
      * It will NOT change the primary key column for all database entries in any way
      */
     public void updateRecord(Field keyOfRecordToUpdate, Field ... fields) {
+        System.out.println(primaryKey.getName());
+        System.out.println(keyOfRecordToUpdate.getName());
         if (!containsPrimaryKey(fields)) {
             String updateQuery = Table.UPDATE_RECORD_QUERY.replace("{table_name}", this.getName())
                     .replace("{columns_with_values}", formatFieldNamesWithValues(fields))
