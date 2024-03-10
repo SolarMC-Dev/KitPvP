@@ -1,5 +1,13 @@
 package com.planetgallium.kitpvp;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.reflect.FieldAccessException;
 import com.hakan.core.HCore;
 import com.planetgallium.kitpvp.game.Infobase;
 import com.planetgallium.kitpvp.game.Stats;
@@ -20,6 +28,8 @@ import com.planetgallium.kitpvp.game.Arena;
 import com.planetgallium.kitpvp.listener.*;
 import com.planetgallium.kitpvp.util.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Game extends JavaPlugin implements Listener {
@@ -69,7 +79,29 @@ public class Game extends JavaPlugin implements Listener {
 		
 		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 	    getCommand("kitpvp").setExecutor(new MainCommand(this));
-		
+	    getCommand("stats").setExecutor(new StatsCommand());
+	    getCommand("stats").setTabCompleter(new StatsCommand.StatsTabCompleter());
+		ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+
+		protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.HIGHEST, PacketType.Play.Client.TAB_COMPLETE) {
+			public void onPacketReceiving(PacketEvent event) {
+				PacketContainer packet = event.getPacket();
+				String message = (packet.getSpecificModifier(String.class).read(0)).toLowerCase();
+				if (message.equals("/stats ")) {
+					List<String> list = new ArrayList<>();
+					for (Player player : Bukkit.getOnlinePlayers()) {
+						list.add(player.getName());
+					}
+
+					PacketContainer packetToSend = new PacketContainer(PacketType.Play.Server.TAB_COMPLETE);
+					String[] completionsArray = new String[list.size()];
+					completionsArray = list.toArray(completionsArray);
+					packetToSend.getStringArrays().write(0, completionsArray);
+					Bukkit.getServer().getScheduler().runTask(instance, () -> protocolManager.sendServerPacket(event.getPlayer(), packetToSend));
+				}
+			}
+		});
+
 		new Metrics(this);
 
 		Bukkit.getScheduler().runTaskAsynchronously(this, this::checkUpdate);

@@ -2,10 +2,13 @@ package com.planetgallium.kitpvp.command;
 
 import com.planetgallium.kitpvp.Game;
 import com.planetgallium.kitpvp.util.Resource;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.server.TabCompleteEvent;
 
 public class AliasCommand implements Listener {
 
@@ -39,14 +42,6 @@ public class AliasCommand implements Listener {
 				p.performCommand("kp kit " + words[1]);
 			}
 
-		} else if (message.startsWith("/stats") && config.getBoolean("Commands.Alias.Stats")) {
-			if (words.length == 1) {
-				e.setCancelled(true);
-				p.performCommand("kp stats");
-			} else if (words.length == 2) {
-				e.setCancelled(true);
-				p.performCommand("kp stats " + words[1]);
-			}
 		}
 
 	}

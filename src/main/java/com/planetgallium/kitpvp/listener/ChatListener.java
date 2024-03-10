@@ -1,6 +1,7 @@
 package com.planetgallium.kitpvp.listener;
 
 import com.planetgallium.kitpvp.game.Arena;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +10,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import com.planetgallium.kitpvp.Game;
 import com.planetgallium.kitpvp.util.Resources;
 import com.planetgallium.kitpvp.util.Toolkit;
+import org.bukkit.event.player.PlayerChatTabCompleteEvent;
+import org.bukkit.event.server.TabCompleteEvent;
 
 public class ChatListener implements Listener {
 

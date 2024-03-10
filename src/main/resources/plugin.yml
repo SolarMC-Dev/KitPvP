@@ -13,6 +13,8 @@ commands:
    kitpvp:
      description: Main command.
      aliases: [kp, kit-pvp]
+   stats:
+     description: stats command
    ckit:
      description: Select a kit.
    cspawn:
